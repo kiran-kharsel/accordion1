@@ -31,14 +31,24 @@ const listElem = document.querySelector('.list')
 accordionData.forEach((data) => {
     let li = document.createElement('li');
     li.classList.add('item');
+    li.id = data.id;
     li.innerHTML = `
-    <h3 class="heading" id=${data.id}>${data.title}</h3>
+    <h3 class="heading">${data.title}</h3>
     <p class="content">${data.content}</p>
     `;
-    li.addEventListener('click', showContent(data.id))
     listElem.appendChild(li)
+    li.addEventListener('click', function(){
+        showContent(data.id)
+    })
 })
 
 function showContent(id){
-
+    const allItems = listElem.querySelectorAll('.item');
+    Array.from(allItems).forEach((item) => {
+        if(+item.id === +id){
+            item.lastElementChild.classList.toggle('show')
+        }else{
+            item.lastElementChild.classList.remove('show')
+        }
+    })
 }
